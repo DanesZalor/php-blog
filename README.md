@@ -1,6 +1,6 @@
 # Blog PHP
 
-## Databbase setup
+## Database setup
 ```SQL
 CREATE TABLE account(
     username varchar(50), 
@@ -14,6 +14,19 @@ CREATE TABLE blogpost(
     content varchar(1000),
     PRIMARY KEY (postTime, poster)
 );
+```
+
+## Database queries
+#### Insert account
+```SQL
+INSERT INTO account (username, password) 
+    VALUES ( "","" );
+```
+
+#### Insert Blog
+```SQL
+INSERT INTO blogpost (poster, content, postTime) 
+    VALUES ( "", "", "yyyy-mm-dd hh:mm:ss" );
 ```
 
 > for the sake of simplicity, we store the password in the database but pls don't

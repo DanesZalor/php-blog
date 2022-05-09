@@ -1,2 +1,2 @@
 <?php
-echo "sex";
+header("Location: login/index.php");
