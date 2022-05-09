@@ -8,25 +8,26 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
 
 <head>
     <title>php_blog - HOME</title>
+    <link rel="stylesheet" href="home.css" type="text/css">
 </head>
 
 <body>
     <h1>php_blog</h1>
-    <form method="post" action="/home/actionpost.php">
+    <form class="postingForm" method="post" action="/home/actionpost.php">
         <p>
-            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true" rows="4" cosl="100"></textarea>
+            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true" rows="4" cols="100"></textarea>
         </p>
         <p>
-            <button type="submit" name="submit">Post</button>
+            <button class="postButton" type="submit" name="submit">Post</button>
         </p>
     </form>
     <?php
     //echo $_SESSION['session_user'];
     function printBlogPost($author, $timePost, $content)
     {
-        echo "<div>
-            <p> <span>${author}</span> @<span>${timePost}</span></p>
-            <p>${content}</p> 
+        echo "<div class=\"blogpost\">
+            <p> <span class=\"author\">${author}</span> <span class=\"time\">@${timePost}</span></p>
+            <p class=\"content\">${content}</p> 
         </div>";
     }
 
