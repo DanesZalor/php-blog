@@ -16,6 +16,8 @@ CREATE TABLE blogpost(
 );
 ```
 
+> for the sake of simplicity, we store the password in the database but pls don't
+
 ## Database queries
 #### Insert account
 ```SQL
@@ -29,4 +31,8 @@ INSERT INTO blogpost (poster, content, postTime)
     VALUES ( "", "", "yyyy-mm-dd hh:mm:ss" );
 ```
 
-> for the sake of simplicity, we store the password in the database but pls don't
+#### View Blog Feed
+```SQL
+SELECT * FROM php_blog.blogpost 
+    ORDER BY postTime DESC;
+```
