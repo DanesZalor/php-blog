@@ -15,10 +15,10 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
     <h1>php_blog</h1>
     <form class="postingForm" method="post" action="/home/actionpost.php">
         <p>
-            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true" rows="4" cols="100"></textarea>
+            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true"></textarea>
         </p>
         <p>
-            <button class="postButton" type="submit" name="submit">Post</button>
+            <button class="postButton" type="submit" name="submit">POST</button>
         </p>
     </form>
     <?php
