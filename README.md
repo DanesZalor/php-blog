@@ -3,18 +3,20 @@
 ## Database setup
 ```SQL
 CREATE TABLE account(
-    username varchar(50), 
-    password varchar(50),
+    username varchar(50) NOT NULL, 
+    password varchar(50) NOT NULL,
     PRIMARY KEY (username)
 );
 
 CREATE TABLE blogpost(
     postTime datetime,
-    poster varchar(50),
-    content varchar(1000),
-    PRIMARY KEY (postTime, poster)
+    poster varchar(50) NOT NULL,
+    content varchar(1000) NOT NULL,
+    PRIMARY KEY (postTime, poster),
+    FOREIGN KEY (poster) REFERENCES account(username)
 );
 ```
+> for postgres, just change datetime to timestamp
 
 > for the sake of simplicity, we store the password in the database but pls don't
 
@@ -24,6 +26,8 @@ CREATE TABLE blogpost(
 INSERT INTO account (username, password) 
     VALUES ( "","" );
 ```
+
+> for postgres; use ' instead of "
 
 #### Insert Blog
 ```SQL
@@ -36,3 +40,4 @@ INSERT INTO blogpost (poster, content, postTime)
 SELECT * FROM php_blog.blogpost 
     ORDER BY postTime DESC;
 ```
+
