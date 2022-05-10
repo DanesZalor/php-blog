@@ -37,10 +37,9 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
         $_SESSION['db_pass']
     );
 
-    if ($pdo) echo "Connected";
-    else die("cant connect to pqsql db");
+    if (!$pdo) die("cant connect to pqsql db");
 
-    $query_res = $pdo->query("SELECT * FROM blogpost");
+    $query_res = $pdo->query("SELECT * FROM blogpost ORDER BY posttime DESC");
 
     foreach ($query_res as $row)
         printBlogPost($row['poster'], $row['posttime'], $row['content']);
