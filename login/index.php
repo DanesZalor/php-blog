@@ -46,8 +46,7 @@ if (array_key_exists('session_user', $_SESSION)) header("Location: /home");
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        //$dbconn = pg_connect("host=${_SESSION['db_host']} port=5432 dbname=${_SESSION['db_name']} user=${_SESSION['db_user']} password=${_SESSION['db_pass']}");
-        $pdo = new PDO(
+        $pdo = new PDO( // pgsql db connect
             "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
             $_SESSION['db_user'],
             $_SESSION['db_pass']
