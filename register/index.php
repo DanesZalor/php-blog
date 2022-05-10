@@ -56,6 +56,8 @@ session_destroy();
                     )"
                 );
 
+                session_start();
+                $_SESSION['newly_registered_user'] = $_POST['INPUT_USERNAME'];
                 header('Location: /login');
             }
         }

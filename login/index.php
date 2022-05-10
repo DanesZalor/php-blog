@@ -2,6 +2,8 @@
 <?php
 // if this client has logged in alr, go /home
 if (array_key_exists('session_user', $_SESSION)) header("Location: /home");
+
+if (array_key_exists('newly_registered_user', $_SESSION)) $_POST['INPUT_USERNAME'] = $_SESSION['newly_registered_user'];
 ?>
 <html>
 
