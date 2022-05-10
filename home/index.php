@@ -13,6 +13,7 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
 
 <body>
     <h1>php_blog</h1>
+    <a href="/home/actionlogout.php">Logout</a>
     <form class="postingForm" method="post" action="/home/actionpost.php">
         <p>
             <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true"></textarea>
@@ -43,15 +44,6 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
 
     foreach ($query_res as $row)
         printBlogPost($row['poster'], $row['posttime'], $row['content']);
-
-    /*
-    $conn = new mysqli("localhost", "djdols", "djdols");
-    if ($conn->connect_error) die("can't connect to DB");
-
-    $res = $conn->query("SELECT * FROM php_blog.blogpost ORDER BY postTime DESC");
-    foreach ($res->fetch_all(MYSQLI_ASSOC) as $row) {
-        printBlogPost($row['poster'], $row['postTime'], $row['content']);
-    }*/
 
     ?>
 </body>
