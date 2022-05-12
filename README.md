@@ -41,3 +41,10 @@ SELECT * FROM php_blog.blogpost
     ORDER BY postTime DESC;
 ```
 
+## API Endpoints
+|Request|Response|
+|-|-|
+|`GET /api/account/`|gets all accounts|
+|`GET /api/account/user/`|gets account with username=*user*|
+|`POST /api/account/ username="user" pass="pass"`|creates account with username=*user* and password=*pass*|
+|`DELETE /api/account/user/`|deletes account with username=*user*|
