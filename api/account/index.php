@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 "INSERT INTO account (username, password) VALUES ('$body->username','$body->password')",
             );
             $data = ["msg" => "Successfully added.", "body" => $body];
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             $data = ["msg" => "Error"];
         }
     } else
@@ -50,12 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 } else if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
 
     if (sizeof($param) == 1) {
-        $query_res = $dbc->query("SELECT * FROM account WHERE username='${param[0]}'");
-        if ($query_res->rowCount() > 0) {
-            $query_res = $dbc->query("DELETE FROM account WHERE username='${param[0]}'");
-            $data = ["msg" => "Successfully deleted ${param[0]}"];
-        } else
-            $data = ["msg" => "${param[0]} not found"];
+        try {
+            $query_res = $dbc->query("SELECT * FROM account WHERE username='${param[0]}'");
+            if ($query_res->rowCount() > 0) {
+                $query_res = $dbc->query("DELETE FROM account WHERE username='${param[0]}'");
+                $data = ["msg" => "Successfully deleted ${param[0]}"];
+            } else
+                $data = ["msg" => "${param[0]} not found"];
+        } catch (PDOException $e) {
+            $data = ["msg" => "${param[0]} has existing blogposts"];
+        }
     } else
         $data = ["msg" => "wrong use case"];
 }
