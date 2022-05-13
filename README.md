@@ -56,6 +56,7 @@ SELECT * FROM php_blog.blogpost
 |**`/api/blogpost/`**||
 |`GET /api/blogpost/id/`|gets blogpost details of blogpost with id=*id*|
 |`DELETE /api/blogpost/id/`|deletes blogpost with id=*id*|
+|||
 |**`/api/blogposts/`**||
 |`GET /api/blogposts/`|gets all blogposts|
 |`GET /api/blogposts/user/`|gets all blogposts from user|

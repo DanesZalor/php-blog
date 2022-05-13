@@ -46,4 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             respond(["msg" => "requires content body"], 400);
     } else
         respond(["msg" => "Unauthorized"], 401);
-}
+} else
+    respond("${_SERVER['REQUEST_METHOD']} not allowed", 405);
