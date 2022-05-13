@@ -45,13 +45,18 @@ SELECT * FROM php_blog.blogpost
 ## API Endpoints
 |||
 |-|-|
-|**account**||
-|`GET /api/accounts/`|gets all accounts' usernames|
+|**`/api/account/`**||
 |`GET /api/account/user/`|gets account with username=*user*|
-|`POST /api/accounts/ username="user" pass="pass" confirmpass="pass"`|creates account with username=*user* and password=*pass*|
-|<sub>requires BasicAuth</sub><br>`DELETE /api/account/`|deletes authenticated account|
+|<sub>[requires BasicAuth]</sub><br>`DELETE /api/account/`|deletes authenticated account|
+||||
+|**`/api/accounts/`**||
+|`GET /api/accounts/`|gets all accounts' usernames|
+|`POST /api/accounts/ username="" pass="" confirmPass=""`|creates account with the body credentials|
 |||
-|**blogpost**||
+|**`/api/blogpost/`**||
+|`GET /api/blogpost/id/`|gets blogpost details of blogpost with id=*id*|
+|`DELETE /api/blogpost/id/`|deletes blogpost with id=*id*|
+|**`/api/blogposts/`**||
 |`GET /api/blogposts/`|gets all blogposts|
 |`GET /api/blogposts/user/`|gets all blogposts from user|
 |<sub>requires BasicAuth</sub><br>`POST /api/blogposts/ content=""`|creates a blogpost with<br>poster=*author* and<br>content=*content*|
