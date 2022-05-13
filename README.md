@@ -59,8 +59,8 @@ SELECT * FROM php_blog.blogpost
 |||
 |**`/api/blogposts/`**||
 |`GET /api/blogposts/`|gets all blogposts|
-|`GET /api/blogposts/user/`|gets all blogposts from user|
-|<sub>requires BasicAuth</sub><br>`POST /api/blogposts/ content=""`|creates a blogpost with<br>poster=*author* and<br>content=*content*|
+|`GET /api/blogposts/ fromAuthor=`|gets all blogposts from *fromAuthor*|
+|<sub>requires BasicAuth</sub><br>`POST /api/blogposts/ content=""`|creates a blogpost with<br>poster=*auth_user* and<br>content=*content*|
 
 ## Deploying
 `common/actionloaddb.php`

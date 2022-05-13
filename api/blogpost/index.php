@@ -2,8 +2,6 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/api/commons.php' ?>
 <?php
 
-$param = get_uri_params("/api/blogpost/");
-
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if ($body->id != null) {
         $query_res = db_query("SELECT * FROM blogpost WHERE id='$body->id'");
