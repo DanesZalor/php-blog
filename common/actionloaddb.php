@@ -21,3 +21,11 @@ $dbc = new PDO( // pgsql db connect
     $_SESSION['db_user'],
     $_SESSION['db_pass']
 );
+
+function db_query($statement, $fetch_mode = PDO::FETCH_DEFAULT)
+{
+    global $dbc;
+    if (!$dbc) die("Failed to query ${statement}\nCan't connect to Database.");
+    return $dbc->query($statement, $fetch_mode);
+}
+//

@@ -24,7 +24,7 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
         </p>
     </form>
     <?php
-    //echo $_SESSION['session_user'];
+
     function printBlogPost($author, $timePost, $content)
     {
         echo "<div class=\"blogpost\">
@@ -33,9 +33,7 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
         </div>";
     }
 
-    if (!$dbc) die("cant connect to pqsql db");
-
-    $query_res = $dbc->query("SELECT * FROM blogpost ORDER BY posttime DESC");
+    $query_res = db_query("SELECT * FROM blogpost ORDER BY posttime DESC");
 
     foreach ($query_res as $row)
         printBlogPost($row['poster'], $row['posttime'], $row['content']);
