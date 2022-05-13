@@ -47,15 +47,15 @@ SELECT * FROM php_blog.blogpost
 |-|-|
 |**`/api/account/`**||
 |`GET /api/account/ username=""`|gets account with username=*param*|
-|<sub>[requires BasicAuth]</sub><br>`DELETE /api/account/`|deletes authenticated account|
+|<sub>requires BasicAuth</sub><br>`DELETE /api/account/`|deletes authenticated account|
 ||||
 |**`/api/accounts/`**||
 |`GET /api/accounts/`|gets all accounts' usernames|
 |`POST /api/accounts/ username="" pass="" confirmPass=""`|creates account with the body credentials|
 |||
 |**`/api/blogpost/`**||
-|`GET /api/blogpost/id/`|gets blogpost details of blogpost with id=*id*|
-|`DELETE /api/blogpost/id/`|deletes blogpost with id=*id*|
+|`GET /api/blogpost/ id=""`|gets blogpost details of blogpost with id=*id*|
+|<sub>requires BasicAuth, Owner</sub><br>`DELETE /api/blogpost/ id=""`|deletes blogpost with id=*id*|
 |||
 |**`/api/blogposts/`**||
 |`GET /api/blogposts/`|gets all blogposts|
