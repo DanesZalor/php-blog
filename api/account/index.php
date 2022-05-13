@@ -32,4 +32,4 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     } else
         respond(["msg" => "requires authentication"], 401);
 } else
-    respond("${_SERVER['REQUEST_METHOD']} not allowed", 405);
+    respond(["msg" => "${_SERVER['REQUEST_METHOD']} not allowed"], 405);

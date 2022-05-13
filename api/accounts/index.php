@@ -28,4 +28,4 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     } else
         respond(["msg" => "required parameters: username:string, password:string confirmPass:string"], 400);
 } else
-    respond("${_SERVER['REQUEST_METHOD']} not allowed", 405);
+    respond(["msg" => "${_SERVER['REQUEST_METHOD']} not allowed"], 405);
