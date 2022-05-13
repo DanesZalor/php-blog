@@ -1,36 +1,31 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/common/actionloaddb.php' ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/api/commons.php' ?>
 <?php
 
-$param = array_filter(
-    explode(
-        "/",
-        str_replace("/api/accounts/", "", $_SERVER['REQUEST_URI'])
-    )
-);
-
-$body = json_decode(file_get_contents('php://input'));
+$param = get_uri_params("/api/accounts/");
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     if (sizeof($param) == 0) {
-        $query_res = $dbc->query("SELECT * FROM account");
-        $data = $query_res->fetchAll(PDO::FETCH_ASSOC);
+        $query_res = db_query("SELECT username FROM account");
+        respond($query_res->fetchAll(PDO::FETCH_ASSOC), 200);
     } else
-        $data = ["msg" => "wrong use case"];
+        respond(["msg" => "wrong use case"], 403);
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-    if ($body->username != null && $body->password != null) {
+    if ($body->username != null && $body->password != null && $body->confirmPass != null) {
         try {
-            $query_res = $dbc->query(
-                "INSERT INTO account (username, password) VALUES ('$body->username','$body->password')",
-            );
-            $data = ["msg" => "Successfully added.", "body" => $body];
+            if ($body->password == $body->confirmPass) {
+                $query_res = db_query(
+                    "INSERT INTO account (username, password) VALUES ('$body->username','$body->password')"
+                );
+                respond(["msg" => "Successfully added.", "body" => $body], 201);
+            } else
+                respond(["msg" => "password and confirmPass doesn't match"], 406);
         } catch (PDOException $e) {
-            $data = ["msg" => "Error"];
+            respond(["msg" => $body->username . " already exists."], 403);
         }
     } else
-        $data = ["msg" => "required parameters: username:string, password:string"];
-}
-
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode($data);
+        respond(["msg" => "required parameters: username:string, password:string confirmPass:string"], 400);
+} else
+    respond(["msg" => "HTTP method unsupported"], 501);

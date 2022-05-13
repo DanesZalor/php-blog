@@ -45,9 +45,9 @@ SELECT * FROM php_blog.blogpost
 |||
 |-|-|
 |**account**||
-|`GET /api/accounts/`|gets all accounts|
+|`GET /api/accounts/`|gets all accounts' usernames|
 |`GET /api/account/user/`|gets account with username=*user*|
-|`POST /api/accounts/ username="user" pass="pass"`|creates account with username=*user* and password=*pass*|
+|`POST /api/accounts/ username="user" pass="pass" confirmpass="pass"`|creates account with username=*user* and password=*pass*|
 |`DELETE /api/account/user/`|deletes account with username=*user*|
 |||
 |**blogpost**||

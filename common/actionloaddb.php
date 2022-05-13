@@ -28,4 +28,3 @@ function db_query($statement, $fetch_mode = PDO::FETCH_DEFAULT)
     if (!$dbc) die("Failed to query ${statement}\nCan't connect to Database.");
     return $dbc->query($statement, $fetch_mode);
 }
-//
