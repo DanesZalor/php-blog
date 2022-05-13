@@ -23,9 +23,27 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             respond(["msg" => "wrong use case"], 406);
     }
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $data = [
-        "msg" => "POSTING",
-        "body" => $body
-    ];
-    respond($data, 200);
+    if ($basicAuth['authorized'] == true) {
+
+        if ($body->content != null) {
+            $postTime = date('Y/m/d H:i:s');
+
+            db_query(
+                "INSERT INTO blogpost (posttime, poster, content)
+                VALUES ('${postTime}','${basicAuth['user']}','$body->content')"
+            );
+
+            $currIdx = db_query("SELECT last_value FROM blogpost_id_seq")->fetchAll(PDO::FETCH_NUM)[0];
+            respond([
+                "msg" => "Successfully added blogpost",
+                [
+                    "content" => $body->content,
+                    "author" => $basicAuth['user'],
+                    "postTime" => $postTime,
+                ]
+            ], 201);
+        } else
+            respond(["msg" => "requires content body"], 400);
+    } else
+        respond(["msg" => "Unauthorized"], 401);
 }

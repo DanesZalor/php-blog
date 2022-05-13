@@ -5,7 +5,15 @@ $body = json_decode(file_get_contents('php://input'));
 $basicAuth = [
     "user" => $_SERVER['PHP_AUTH_USER'],
     "pass" => $_SERVER['PHP_AUTH_PW'],
+    "authorized" => false,
 ];
+
+if (db_query(
+    "SELECT * FROM account WHERE 
+    username='${basicAuth['user']}' AND 
+    password='${basicAuth['pass']}'"
+)->rowCount() > 0) $basicAuth['authorized'] = true;
+
 
 /**
  * send json http_response
