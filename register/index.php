@@ -34,9 +34,8 @@
             echo "<p class=\"ErrorMSG\">Passwords don't match</p>";
 
         else {
-            if (!$dbc) die("cant connect to pqsql db");
 
-            $query_res = $dbc->query("SELECT * FROM account WHERE username='${_POST['INPUT_USERNAME']}'");
+            $query_res = db_query("SELECT * FROM account WHERE username='${_POST['INPUT_USERNAME']}'");
             if ($query_res->rowCount() > 0)
                 echo "<p class=\"ErrorMSG\">username already taken</p>";
 
