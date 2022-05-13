@@ -17,19 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         respond(["msg" => " wrong use case"], 403);
 } else if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
 
-    if (sizeof($param) == 1) {
+    if ($basicAuth['authorized']) {
         try {
             if (
-                db_query("SELECT * FROM account WHERE username='${param[0]}'")->rowCount() > 0
+                db_query("SELECT * FROM account WHERE username='${basicAuth['user']}'")->rowCount() > 0
             ) {
-                db_query("DELETE FROM account WHERE username='${param[0]}'");
-                respond(["msg" => "Successfully deleted ${param[0]}"], 202);
+                db_query("DELETE FROM account WHERE username='${basicAuth['user']}'");
+                respond(["msg" => "Successfully deleted ${basicAuth['user']}"], 202);
             } else
-                respond(["msg" => $param[0] . " not found"], 404);
+                respond(["msg" => $basicAuth['user'] . " not found"], 404);
         } catch (PDOException $e) {
             respond(["msg" => "${param[0]} has existing blogposts"], 403);
         }
     } else
-        respond(["msg" => "wrong use case"], 400);
+        respond(["msg" => "requires authentication"], 401);
 } else
     respond(["msg" => "HTTP method not allowed"], 501);
