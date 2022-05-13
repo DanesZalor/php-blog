@@ -1,12 +1,6 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/common/actionloaddb.php' ?>
 <?php
 
-$dbc = new PDO( // pgsql db connect
-    "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
-    $_SESSION['db_user'],
-    $_SESSION['db_pass']
-);
-
 $param = array_filter(
     explode(
         "/",

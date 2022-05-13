@@ -34,15 +34,9 @@ if (array_key_exists('newly_registered_user', $_SESSION)) $_POST['INPUT_USERNAME
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        $pdo = new PDO( // pgsql db connect
-            "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
-            $_SESSION['db_user'],
-            $_SESSION['db_pass']
-        );
+        if (!$dbc) die("cant connect to pqsql db");
 
-        if (!$pdo) die("cant connect to pqsql db");
-
-        $query_res = $pdo->query("SELECT * from account WHERE username='${_POST['INPUT_USERNAME']}' AND password='${_POST['INPUT_PASSWORD']}'");
+        $query_res = $dbc->query("SELECT * from account WHERE username='${_POST['INPUT_USERNAME']}' AND password='${_POST['INPUT_PASSWORD']}'");
 
         if ($query_res->rowCount() == 1) {
             $_SESSION['session_user'] = $_POST['INPUT_USERNAME'];

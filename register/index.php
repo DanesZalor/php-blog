@@ -1,7 +1,3 @@
-<?php
-// if this client has logged in alr, go /home
-session_destroy();
-?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/common/actionloaddb.php' ?>
 <html>
 
@@ -38,24 +34,20 @@ session_destroy();
             echo "<p class=\"ErrorMSG\">Passwords don't match</p>";
 
         else {
-            $pdo = new PDO( // pgsql db connect
-                "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
-                $_SESSION['db_user'],
-                $_SESSION['db_pass']
-            );
-            if (!$pdo) die("cant connect to pqsql db");
+            if (!$dbc) die("cant connect to pqsql db");
 
-            $query_res = $pdo->query("SELECT * FROM account WHERE username='${_POST['INPUT_USERNAME']}'");
+            $query_res = $dbc->query("SELECT * FROM account WHERE username='${_POST['INPUT_USERNAME']}'");
             if ($query_res->rowCount() > 0)
                 echo "<p class=\"ErrorMSG\">username already taken</p>";
 
             else {
-                $query_res = $pdo->query(
+                $query_res = $dbc->query(
                     "INSERT INTO account (username, password) VALUES (
                         '${_POST['INPUT_USERNAME']}', '${_POST['INPUT_PASSWORD']}'
                     )"
                 );
 
+                session_destroy();
                 session_start();
                 $_SESSION['newly_registered_user'] = $_POST['INPUT_USERNAME'];
                 header('Location: /login');

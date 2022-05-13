@@ -1,3 +1,4 @@
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/common/actionloaddb.php' ?>
 <?php
 session_start();
 
@@ -32,15 +33,9 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
         </div>";
     }
 
-    $pdo = new PDO( // pgsql db connect
-        "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
-        $_SESSION['db_user'],
-        $_SESSION['db_pass']
-    );
+    if (!$dbc) die("cant connect to pqsql db");
 
-    if (!$pdo) die("cant connect to pqsql db");
-
-    $query_res = $pdo->query("SELECT * FROM blogpost ORDER BY posttime DESC");
+    $query_res = $dbc->query("SELECT * FROM blogpost ORDER BY posttime DESC");
 
     foreach ($query_res as $row)
         printBlogPost($row['poster'], $row['posttime'], $row['content']);

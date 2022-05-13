@@ -15,3 +15,9 @@ $_SESSION['db_name'] = "php_blog";
 $_SESSION['db_user'] = "djdols";
 $_SESSION['db_port'] = "5432";
 $_SESSION['db_pass'] = "";
+
+$dbc = new PDO( // pgsql db connect
+    "pgsql:host=${_SESSION['db_host']};port=5432;dbname=${_SESSION['db_name']};",
+    $_SESSION['db_user'],
+    $_SESSION['db_pass']
+);
