@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             } else
                 respond(["msg" => $basicAuth['user'] . " not found"], 404);
         } catch (PDOException $e) {
-            respond(["msg" => "${param[0]} has existing blogposts"], 403);
+            respond(["msg" => "${basicAuth['user']} has existing blogposts"], 403);
         }
     } else
         respond(["msg" => "requires authentication"], 401);
