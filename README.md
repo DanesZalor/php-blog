@@ -46,7 +46,7 @@ SELECT * FROM php_blog.blogpost
 |||
 |-|-|
 |**`/api/account/`**||
-|`GET /api/account/user/`|gets account with username=*user*|
+|`GET /api/account/ username=""`|gets account with username=*param*|
 |<sub>[requires BasicAuth]</sub><br>`DELETE /api/account/`|deletes authenticated account|
 ||||
 |**`/api/accounts/`**||

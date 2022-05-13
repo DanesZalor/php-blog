@@ -2,17 +2,22 @@
 
 $body = json_decode(file_get_contents('php://input'));
 
+
 $basicAuth = [
-    "user" => $_SERVER['PHP_AUTH_USER'],
-    "pass" => $_SERVER['PHP_AUTH_PW'],
+    "user" => array_key_exists('PHP_AUTH_USER', $_SERVER) ? $_SERVER['PHP_AUTH_USER'] : '',
+    "pass" => array_key_exists('PHP_AUTH_PW', $_SERVER) ? $_SERVER['PHP_AUTH_PW'] : '',
     "authorized" => false,
 ];
 
-if (db_query(
-    "SELECT * FROM account WHERE 
+if (
+    $basicAuth['user'] != '' &&
+    $basicAuth['pass'] != '' &&
+    db_query(
+        "SELECT * FROM account WHERE 
     username='${basicAuth['user']}' AND 
     password='${basicAuth['pass']}'"
-)->rowCount() > 0) $basicAuth['authorized'] = true;
+    )->rowCount() > 0
+) $basicAuth['authorized'] = true;
 
 
 /**

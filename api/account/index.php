@@ -2,19 +2,19 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/api/commons.php' ?>
 <?php
 
-$param = get_uri_params("/api/account/");
+//$param = get_uri_params("/api/account/");
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
-    if (sizeof($param) == 1) {
-        $query_res = db_query("SELECT * FROM account WHERE username='${param[0]}'");
+    if ($body->username != null) {
+        $query_res = db_query("SELECT * FROM account WHERE username='$body->username'");
 
-        if ($query_res->rowCount() == 1)
-            respond($query_res->fetchAll(PDO::FETCH_ASSOC)[0], 202);
+        if ($query_res->rowCount() > 0)
+            respond($query_res->fetchAll(PDO::FETCH_NUM)[0], 200);
         else
-            respond(["msg" => $param[0] . " not found"], 404);
+            respond(["msg" => "$body->username not found"], 404);
     } else
-        respond(["msg" => " wrong use case"], 403);
+        respond(["msg" => "specify username"], 403);
 } else if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
 
     if ($basicAuth['authorized']) {
