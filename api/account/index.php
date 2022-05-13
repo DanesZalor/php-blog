@@ -2,8 +2,6 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/api/commons.php' ?>
 <?php
 
-//$param = get_uri_params("/api/account/");
-
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     if ($body->username != null) {
