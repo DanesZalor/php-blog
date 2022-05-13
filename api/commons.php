@@ -2,6 +2,11 @@
 
 $body = json_decode(file_get_contents('php://input'));
 
+$basicAuth = [
+    "user" => $_SERVER['PHP_AUTH_USER'],
+    "pass" => $_SERVER['PHP_AUTH_PW'],
+];
+
 /**
  * send json http_response
  * 

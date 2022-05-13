@@ -9,10 +9,11 @@ CREATE TABLE account(
 );
 
 CREATE TABLE blogpost(
-    postTime datetime,
+    id SERIAL,
+    postTime timestamp,
     poster varchar(50) NOT NULL,
     content varchar(1000) NOT NULL,
-    PRIMARY KEY (postTime, poster),
+    PRIMARY KEY (id),
     FOREIGN KEY (poster) REFERENCES account(username)
 );
 ```

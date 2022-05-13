@@ -1,38 +1,31 @@
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/common/actionloaddb.php' ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/api/commons.php' ?>
 <?php
-$param = array_filter(
-    explode(
-        "/",
-        str_replace("/api/blogposts/", "", $_SERVER['REQUEST_URI'])
-    )
-);
 
-$body = json_decode(file_get_contents('php://input'));
+$param = get_uri_params("/api/blogposts/");
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     switch (sizeof($param)) {
         case 0:
-            $query_res = $dbc->query("SELECT * FROM blogpost");
-            $data = $query_res->fetchAll(PDO::FETCH_ASSOC);
+            respond(
+                db_query("SELECT * FROM blogpost")->fetchAll(PDO::FETCH_ASSOC),
+                200
+            );
             break;
         case 1:
-            $query_res = $dbc->query("SELECT * FROM blogpost WHERE poster='${param[0]}'");
-            $data = $query_res->fetchAll(PDO::FETCH_ASSOC);
+            respond(
+                db_query("SELECT * FROM blogpost WHERE poster='${param[0]}'")->fetchAll(PDO::FETCH_ASSOC),
+                200
+            );
             break;
         default:
-            $data = ["msg" => "wrong use case"];
+            respond(["msg" => "wrong use case"], 406);
     }
 } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $data = [
         "msg" => "POSTING",
         "body" => $body
     ];
+    respond($data, 200);
 }
-
-$data["auth"] = [
-    "user" => $_SERVER['PHP_AUTH_USER'],
-    "pass" => $_SERVER['PHP_AUTH_PW'],
-];
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode($data);
