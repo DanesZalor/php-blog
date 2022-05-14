@@ -61,24 +61,3 @@ SELECT * FROM php_blog.blogpost
 |`GET /api/blogposts/`|gets all blogposts|
 |`GET /api/blogposts/ fromAuthor=`|gets all blogposts from *fromAuthor*|
 |<sub>requires BasicAuth</sub><br>`POST /api/blogposts/ content=""`|creates a blogpost with<br>poster=*auth_user* and<br>content=*content*|
-
-## Deploying
-`common/actionloaddb.php`
-```php
-/* heroku deploy 
-$_SESSION['db_host'] = "ec2-54-164-40-66.compute-1.amazonaws.com";
-$_SESSION['db_name'] = "d5jpsu05ngdp98";
-$_SESSION['db_user'] = "gufvvvxbtvglqn";
-$_SESSION['db_port'] = "5432";
-$_SESSION['db_pass'] = "f4121ca0b5c6dbe1a289575016152315b6c81ad4701eb0fb39a5b6e4f7fb0c5a";
-*/
-
-// local
-$_SESSION['db_host'] = "localhost";
-$_SESSION['db_name'] = "php_blog";
-$_SESSION['db_user'] = "djdols";
-$_SESSION['db_port'] = "5432";
-$_SESSION['db_pass'] = "";
-```
-
-For **developement**, uncomment the *local* session vars and comment the *heroku deploy* session vars. For **deployment**, do the opposite.
