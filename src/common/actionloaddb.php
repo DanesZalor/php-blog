@@ -1,6 +1,5 @@
 <?php
 
-use function PHPUnit\Framework\throwException;
 
 session_start();
 
@@ -32,6 +31,6 @@ function db_query($statement, $fetch_mode = PDO::FETCH_DEFAULT)
         return $dbc->query($statement, $fetch_mode);
     } catch (PDOException $e) {
         printf("ERROR:" . $statement);
-        throwException($e);
+        throw $e;
     }
 }
