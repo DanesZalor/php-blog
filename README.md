@@ -61,3 +61,6 @@ SELECT * FROM php_blog.blogpost
 |`GET /api/blogposts/`|gets all blogposts|
 |`GET /api/blogposts/ fromAuthor=`|gets all blogposts from *fromAuthor*|
 |<sub>requires BasicAuth</sub><br>`POST /api/blogposts/ content=""`|creates a blogpost with<br>poster=*auth_user* and<br>content=*content*|
+
+## Running
+Host `src/`
