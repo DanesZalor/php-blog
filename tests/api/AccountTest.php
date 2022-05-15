@@ -2,6 +2,7 @@
 
 namespace APITests;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
 use PDOException;
@@ -24,12 +25,8 @@ class AccountTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        try {
-            // delete test account just in case previous test run didn't work out
-            self::tearDownAfterClass();
-            TestCommons::db_query("INSERT INTO account (username, password) VALUES ('testuser1', 'testpass1')");
-        } catch (PDOException $e) {
-        }
+        self::tearDownAfterClass();
+        TestCommons::db_query("INSERT INTO account (username, password) VALUES ('testuser1', 'testpass1')");
     }
 
     public static function tearDownAfterClass(): void
@@ -38,24 +35,47 @@ class AccountTest extends TestCase
         TestCommons::db_query("DELETE FROM account WHERE username='testuser1'");
     }
 
-    public function testGet()
+    public function request(string $method, $uri = '', array $options = []){
+        try{
+            return $this->http->request($method, $uri, $options);
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
+    public function testGET()
     {
         // arrange
-        $expectedResponse = 200;
+        $expectedStatusCode = 200;
         $expectedContentType = "application/json";
         $expectedBody = (object)["username" => "testuser1"];
 
         // act
-        $response = $this->http->request('GET', 'api/accounts/');
+        $response = $this->request('GET', 'api/accounts/');
 
         $actualStatusCode = $response->getStatusCode();
         $actualContentType = $response->getHeaders()["Content-Type"][0];
         $actualBody = json_decode($response->getBody());
 
         // assert
-        $this->assertEquals($expectedResponse, $actualStatusCode);
+        $this->assertEquals($expectedStatusCode, $actualStatusCode);
         $this->assertEquals($expectedContentType, $actualContentType);
-
         $this->assertContainsEquals($expectedBody, $actualBody);
+    }
+
+    public function testPOST_with_incomplete_params()
+    {   
+        // arange
+        $expectedStatusCode = 400;
+        $expectedBody = (object)["msg" => "required username:string, password:string confirmPass:string"];
+
+        // act
+        $response = $this->request('POST', 'api/accounts/', ['http_errors' => false]);
+        $actualStatusCode = $response->getStatusCode();
+        $actualBody = json_decode($response->getBody());
+
+        // assert
+        $this->assertEquals($expectedStatusCode, $actualStatusCode);
+        $this->assertEquals($expectedBody, $actualBody);
     }
 }

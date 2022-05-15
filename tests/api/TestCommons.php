@@ -15,7 +15,7 @@ namespace APITests {
 
         private static $dbc;
 
-        public static function db_query($statement, $fetch_mode = PDO::FETCH_DEFAULT)
+        public static function db_query($statement, $fetch_mode = PDO::FETCH_DEFAULT, $catch_exception=false)
         {
             self::$dbc = new PDO(
                 "pgsql:host=" . self::$host . ";port=" . self::$port . ";dbname=" . self::$dbname . ";",
@@ -27,7 +27,7 @@ namespace APITests {
                 return self::$dbc->query($statement, $fetch_mode);
             } catch (PDOException $e) {
                 printf("ERROR:" . $statement);
-                throw $e;
+                if($catch_exception) throw $e;
             }
         }
     }
