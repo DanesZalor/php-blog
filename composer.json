@@ -4,6 +4,7 @@
         "guzzlehttp/guzzle": "^7.4"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit tests/"
+        "test": "./vendor/bin/phpunit tests/",
+        "host-server": "php -S localhost:3001 -t src/"
     }
 }

@@ -2,26 +2,12 @@
 
 namespace APITests;
 
-use Exception;
-use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Client;
-use PDOException;
+
 
 require_once("TestCommons.php");
 
-class AccountTest extends TestCase
+class AccountTest extends APITestCase
 {
-    private $http;
-
-    public function setUp(): void
-    {
-        $this->http = new Client(['base_uri' => 'http://localhost:3001/']);
-    }
-
-    public function tearDown(): void
-    {
-        $this->http = null;
-    }
 
     public static function setUpBeforeClass(): void
     {
@@ -31,18 +17,9 @@ class AccountTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-        // only specify username, just in case some dumbass registers with username='testuser1'
+        TestCommons::db_query("DELETE FROM blogpost WHERE poster='testuser1'");
         TestCommons::db_query("DELETE FROM account WHERE username='testuser1'");
     }
-
-    public function request(string $method, $uri = '', array $options = []){
-        try{
-            return $this->http->request($method, $uri, $options);
-        }catch(Exception $e){
-            return $e;
-        }
-    }
-
     public function testGET()
     {
         // arrange

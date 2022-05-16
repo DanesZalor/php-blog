@@ -4,6 +4,9 @@ namespace APITests {
 
     use PDO;
     use PDOException;
+    use Exception;
+    use PHPUnit\Framework\TestCase;
+    use GuzzleHttp\Client;
 
     final class TestCommons
     {
@@ -26,9 +29,31 @@ namespace APITests {
                 if (!self::$dbc) die("Failed to query ${statement}\nCan't connect to Database.");
                 return self::$dbc->query($statement, $fetch_mode);
             } catch (PDOException $e) {
-                printf("ERROR:" . $statement);
+                printf("ERROR:" . $statement . "\n");
                 if($catch_exception) throw $e;
             }
         }
+    }
+
+    class APITestCase extends TestCase{
+        
+        private $httpClient;
+
+        public function setUp(): void{
+            $this->httpClient = new Client(['base_uri' => 'http://localhost:3001/']);
+        }
+
+        public function tearDown(): void{
+            $this->httpClient = null;
+        }
+
+        protected function request(string $method, $uri = '', array $options = []){
+            try{
+                return $this->httpClient->request($method, $uri, $options);
+            }catch(Exception $e){
+                return $e;
+            }
+        }
+
     }
 }
