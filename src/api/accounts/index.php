@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
                 $query_res = db_query(
                     "INSERT INTO account (username, password) VALUES ('$body->username','$body->password')"
                 );
-                respond(["msg" => "Successfully added.", "body" => $body], 201);
+                respond(["msg" => "Successfully added"], 201);
             } else
                 respond(["msg" => "password and confirmPass doesn't match"], 406);
         } catch (PDOException $e) {

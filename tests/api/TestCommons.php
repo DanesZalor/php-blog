@@ -33,6 +33,11 @@ namespace APITests {
                 if($catch_exception) throw $e;
             }
         }
+
+        public static function deleteALLfrom($account){
+            TestCommons::db_query("DELETE FROM blogpost WHERE poster='${account}'");
+            TestCommons::db_query("DELETE FROM account WHERE username='${account}'");
+        }
     }
 
     class APITestCase extends TestCase{

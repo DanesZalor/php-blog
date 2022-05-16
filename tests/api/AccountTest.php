@@ -2,7 +2,7 @@
 
 namespace APITests;
 
-
+use GuzzleHttp\RequestOptions;
 
 require_once("TestCommons.php");
 
@@ -17,8 +17,8 @@ class AccountTest extends APITestCase
 
     public static function tearDownAfterClass(): void
     {
-        TestCommons::db_query("DELETE FROM blogpost WHERE poster='testuser1'");
-        TestCommons::db_query("DELETE FROM account WHERE username='testuser1'");
+        TestCommons::deleteALLfrom('testuser1');
+        TestCommons::deleteALLfrom('testuser2');
     }
     public function testGET()
     {
@@ -47,7 +47,29 @@ class AccountTest extends APITestCase
         $expectedBody = (object)["msg" => "required username:string, password:string confirmPass:string"];
 
         // act
-        $response = $this->request('POST', 'api/accounts/', ['http_errors' => false]);
+        $response = $this->request('POST', 'api/accounts/', [
+            'http_errors' => false, RequestOptions::JSON => ['username'=>'testuser1']
+        ]);
+        $actualStatusCode = $response->getStatusCode();
+        $actualBody = json_decode($response->getBody());
+
+        // assert
+        $this->assertEquals($expectedStatusCode, $actualStatusCode);
+        $this->assertEquals($expectedBody, $actualBody);
+    }
+
+    
+    public function testPOST_with_complete_params()
+    {   
+        // arange
+        $expectedStatusCode = 201;
+        $expectedBody = (object)["msg" => "Successfully added"];
+
+        // act
+        $response = $this->request('POST', 'api/accounts/', [
+            'http_errors' => false, 
+            RequestOptions::JSON => ['username'=>'testuser2', 'password'=>'testpass2', 'confirmPass'=>'testpass2']
+        ]);
         $actualStatusCode = $response->getStatusCode();
         $actualBody = json_decode($response->getBody());
 
