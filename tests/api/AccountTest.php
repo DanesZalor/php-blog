@@ -77,4 +77,22 @@ class AccountTest extends APITestCase
         $this->assertEquals($expectedStatusCode, $actualStatusCode);
         $this->assertEquals($expectedBody, $actualBody);
     }
+
+    public function testPOST_with_mismatch_password(){
+        // arange
+        $expectedStatusCode = 406;
+        $expectedBody = (object)["msg" => "password and confirmPass doesn't match"];
+
+        // act
+        $response = $this->request('POST', 'api/accounts/', [
+            'http_errors' => false, 
+            RequestOptions::JSON => ['username'=>'testuser3', 'password'=>'testpass2', 'confirmPass'=>'testpass3']
+        ]);
+        $actualStatusCode = $response->getStatusCode();
+        $actualBody = json_decode($response->getBody());
+
+        // assert
+        $this->assertEquals($expectedStatusCode, $actualStatusCode);
+        $this->assertEquals($expectedBody, $actualBody);
+    }
 }
