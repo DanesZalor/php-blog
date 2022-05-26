@@ -28,6 +28,6 @@ if (
  */
 function respond($data, int $responseCode)
 {
-    header('Content-Type: application/json; charset=utf-8', true, $responseCode);
+    header('Content-Type: application/json', true, $responseCode);
     echo json_encode($data);
 }

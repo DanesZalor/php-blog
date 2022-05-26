@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
             respond([
                 "msg" => "Successfully added blogpost",
                 [
-                    "content" => $body->content,
+                    "content" => trim($body->content),
                     "author" => $basicAuth['user'],
                     "postTime" => $postTime,
                 ]

@@ -6,17 +6,17 @@
 }
 
 
-.postingForm * {
+#postingForm * {
     border-style: none;
     background-color: rgb(247, 247, 247);
     margin: 0px;
 }
 
-.postingForm {
+#postingForm {
     border-color: rgb(230, 230, 230);
 }
 
-.postButton {
+#postButton {
     border-style: solid;
     border-width: 1px 1px 1px 1px;
     color: aliceblue;

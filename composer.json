@@ -1,5 +1,10 @@
 {
-    "require": {
-        "phpunit/phpunit": "^9"
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit tests/",
+        "host-server": "php -S localhost:3001 -t src/"
     }
 }

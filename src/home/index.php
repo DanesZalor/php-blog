@@ -3,7 +3,10 @@
 session_start();
 
 // if 'session_user' doesn't exist, go back to login
-if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
+if (
+    !array_key_exists('session_user', $_SESSION) || 
+    !array_key_exists('session_pw', $_SESSION)
+) header("Location: /login");
 ?>
 <html>
 
@@ -15,30 +18,27 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
 <body>
     <h1>php_blog</h1>
     <a href="/home/actionlogout.php">Logout</a>
-    <form class="postingForm" method="post" action="/home/actionpost.php">
+    <div id="postingForm">
         <p>
-            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true"></textarea>
+            <textarea id="postingForm_content" 
+                placeholder="what are you thinking about?" 
+                maxlength="1000" required="true">
+            </textarea>
         </p>
-        <p>
-            <button class="postButton" type="submit" name="submit">POST</button>
-        </p>
-    </form>
-    <?php
+        <p><button id="postButton">POST</button></p>
+    </div>
 
-    function printBlogPost($author, $timePost, $content)
-    {
-        echo "<div class=\"blogpost\">
-            <p> <span class=\"author\">${author}</span> <span class=\"time\">@${timePost}</span></p>
-            <p class=\"content\">${content}</p> 
-        </div>";
-    }
+    <div id="blogfeed">
+        <!-- put blogfeed doms goes here -->
+    </div>
 
-    $query_res = db_query("SELECT * FROM blogpost ORDER BY posttime DESC");
-
-    foreach ($query_res as $row)
-        printBlogPost($row['poster'], $row['posttime'], $row['content']);
-
-    ?>
+    <script type="text/javascript">
+        var user = {
+            username: '<?php echo $_SESSION['session_user'] ?>',
+            password: '<?php echo $_SESSION['session_pw'] ?>'
+        };
+    </script>
+    <script src="home/index.js"></script>
 </body>
 
 </html>
