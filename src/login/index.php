@@ -34,10 +34,14 @@ if (array_key_exists('newly_registered_user', $_SESSION)) $_POST['INPUT_USERNAME
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        $query_res = db_query("SELECT * from account WHERE username='${_POST['INPUT_USERNAME']}' AND password='${_POST['INPUT_PASSWORD']}'");
+        $query_res = db_query(
+            "SELECT * from account WHERE username='${_POST['INPUT_USERNAME']}' 
+            AND password='${_POST['INPUT_PASSWORD']}'"
+        );
 
         if ($query_res->rowCount() == 1) {
             $_SESSION['session_user'] = $_POST['INPUT_USERNAME'];
+            $_SESSION['session_pw'] = $_POST['INPUT_PASSWORD'];
             header("Location: /home");
         } else echo "<p>wrong credentials</p>";
     }
