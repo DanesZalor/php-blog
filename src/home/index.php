@@ -15,14 +15,21 @@ if (!array_key_exists('session_user', $_SESSION)) header("Location: /login");
 <body>
     <h1>php_blog</h1>
     <a href="/home/actionlogout.php">Logout</a>
-    <div class="postingForm">
+    <div id="postingForm">
         <p>
-            <textarea name="postContent" placeholder="what are you thinking about?" maxlength="1000" required="true"></textarea>
+            <textarea id="postingForm_content" 
+                placeholder="what are you thinking about?" 
+                maxlength="1000" required="true">
+            </textarea>
         </p>
-        <p>
-            <button class="postButton" type="submit" name="submit">POST</button>
-        </p>
+        <p><button id="postButton">POST</button></p>
     </div>
+
+    <div id="blogfeed">
+        <!-- put blogfeed doms goes here -->
+    </div>
+
+    <script src="index.js"></script>
 </body>
 
 </html>
