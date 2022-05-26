@@ -7,12 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     if ($body->fromAuthor != null) {
         respond( // get all posts fromAuthor
-            db_query("SELECT * FROM blogpost WHERE poster='$body->fromAuthor'")->fetchAll(PDO::FETCH_ASSOC),
+            db_query("SELECT * FROM blogpost WHERE poster='$body->fromAuthor' ORDER BY posttime DESC")->fetchAll(PDO::FETCH_ASSOC),
             200
         );
     } else {
         respond( // get all posts
-            db_query("SELECT * FROM blogpost")->fetchAll(PDO::FETCH_ASSOC),
+            db_query("SELECT * FROM blogpost ORDER BY posttime DESC")->fetchAll(PDO::FETCH_ASSOC),
             200
         );
     }
